@@ -1,12 +1,13 @@
 import React from 'react';
-import {View} from 'react-native';
+import {Button} from 'react-native';
+
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+
 import Home from './screens/Home';
 import AddTransaction from './screens/AddTransaction';
 import Details from './screens/Details';
 import UpdateTransaction from './screens/UpdateTransaction';
-import {CommonStyles} from './utils/CommonStyles';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,15 +15,32 @@ function Main(): React.JSX.Element {
   return (
     <NavigationContainer>
       <Stack.Navigator
+        initialRouteName="Transactions"
         screenOptions={{
           headerStyle: {
-            backgroundColor: 'red',
+            backgroundColor: '#e0114f',
           },
           headerTitleStyle: {
             fontWeight: 'bold',
+            color: '#fff',
+            fontSize: 30,
           },
         }}>
-        <Stack.Screen name="Transactions" component={Home} />
+        <Stack.Screen
+          name="Transactions"
+          component={Home}
+          //   options={({navigation}) => ({
+          //     headerLeft: () => (
+          //       <Button
+          //         title="back"
+          //         onPress={() => {
+          //           console.log('clicked');
+          //           navigation.navigate('Details');
+          //         }}
+          //       />
+          //     ),
+          //   })}
+        />
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="Add Transaction" component={AddTransaction} />
         <Stack.Screen name="Update Transaction" component={UpdateTransaction} />

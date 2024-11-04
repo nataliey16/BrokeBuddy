@@ -1,8 +1,12 @@
 import React from 'react';
-import {View} from 'react-native';
+import {View, Text} from 'react-native';
 
 function AddTransaction(): React.JSX.Element {
-  return <View></View>;
+  return (
+    <View>
+      <Text>Add</Text>
+    </View>
+  );
 }
 
 export default AddTransaction;
