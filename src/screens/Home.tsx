@@ -15,7 +15,6 @@ function Home({
       <Button
         title="Go To Details"
         onPress={() => {
-          console.log('clicked');
           navigation.navigate('Add Transaction');
         }}></Button>
     </View>
