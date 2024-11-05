@@ -21,7 +21,7 @@ function CheckBox(props: CheckBoxPropType): React.JSX.Element {
         iconStyle={{borderColor: 'red'}}
         innerIconStyle={{borderWidth: 2}}
         // textStyle={{fontFamily: 'JosefinSans-Regular'}}
-        onPress={(isChecked: string) => {
+        onPress={(isChecked: boolean) => {
           console.log(isChecked);
         }}
       />
