@@ -17,7 +17,15 @@ function AddTransaction(): React.JSX.Element {
       ...prevEntry,
       [name]: value,
     }));
-    console.log(value);
+    // console.log(value);
+  };
+
+  const handleTransactionTypeChange = (type: TransactionType) => {
+    setNewTransEntry(prevEntry => ({
+      ...prevEntry,
+      type,
+    }));
+    console.log(type);
   };
 
   const handleSubmit = () => {
@@ -51,9 +59,27 @@ function AddTransaction(): React.JSX.Element {
         value={newTransEntry.amount.toString()}
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
       />
-      <CheckBox label="Essential" transType={TransactionType.Essential} />
-      <CheckBox label="Leisure" transType={TransactionType.Leisure} />
-      <CheckBox label="Others" transType={TransactionType.Others} />
+      <CheckBox
+        label="Essential"
+        value={newTransEntry.type === TransactionType.Essential}
+        onChangeTransType={value =>
+          handleTransactionTypeChange(TransactionType.Essential)
+        }
+      />
+      <CheckBox
+        label="Leisure"
+        value={newTransEntry.type === TransactionType.Leisure}
+        onChangeTransType={() =>
+          handleTransactionTypeChange(TransactionType.Leisure)
+        }
+      />
+      <CheckBox
+        label="Others"
+        value={newTransEntry.type === TransactionType.Others}
+        onChangeTransType={() =>
+          handleTransactionTypeChange(TransactionType.Others)
+        }
+      />
       <Pressable style={CommonStyles.button} onPress={handleSubmit}>
         <Text style={CommonStyles.btnTxt}>Submit</Text>
       </Pressable>

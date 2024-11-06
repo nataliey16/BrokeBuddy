@@ -5,15 +5,16 @@ import {TransactionType} from '../utils/utility';
 
 type CheckBoxPropType = {
   label: string;
-  transType: TransactionType;
+  value: boolean;
+  onChangeTransType: (value: any) => void;
 };
 
 function CheckBox(props: CheckBoxPropType): React.JSX.Element {
-  const {label, transType} = props;
+  const {label, value, onChangeTransType} = props;
   return (
     <View style={styles.checkboxView}>
       <BouncyCheckbox
-        isChecked={transType === TransactionType.Essential} // Replace 'SomeValue' with the appropriate value
+        isChecked={value}
         size={25}
         fillColor="red"
         unFillColor="#FFFFFF"
@@ -23,6 +24,7 @@ function CheckBox(props: CheckBoxPropType): React.JSX.Element {
         // textStyle={{fontFamily: 'JosefinSans-Regular'}}
         onPress={(isChecked: boolean) => {
           console.log(isChecked);
+          onChangeTransType(value);
         }}
       />
     </View>
