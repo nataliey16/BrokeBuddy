@@ -58,6 +58,7 @@ function AddTransaction(): React.JSX.Element {
         placeholder="Amount in CAD"
         value={newTransEntry.amount.toString()}
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
+        keyboardType="numeric"
       />
       <CheckBox
         label="Essential"
