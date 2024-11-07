@@ -13,6 +13,14 @@ export const CommonStyles = StyleSheet.create({
     margin: 10,
   },
 
+  placeholderTxt: {
+    fontSize: 30,
+    color: '#B7B7B7',
+    margin: 10,
+    padding: 10,
+    textAlign: 'center',
+  },
+
   txtInput: {
     borderRadius: 10,
     borderWidth: 1,

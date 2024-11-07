@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, Button} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import {FloatingAction} from 'react-native-floating-action';
 
@@ -19,24 +19,21 @@ function Home({
       position: 1,
     },
   ];
+
   return (
     <View style={CommonStyles.screens}>
-      <Text> Home</Text>
+      <Text style={CommonStyles.placeholderTxt}>
+        Add Transaction to See Entry Here.
+      </Text>
+      {/* <FlatList /> */}
       <FloatingAction
         actions={actions}
-        onPressItem={name => {
-          {
-            navigation.navigate('Add Transaction');
-          }
-        }}
+        onPressItem={() => navigation.navigate('Add Transaction')}
       />
-      {/* <Button
-        title="Go To Details"
-        onPress={() => {
-          navigation.navigate('Add Transaction');
-        }}></Button> */}
     </View>
   );
 }
+
+const style = StyleSheet.create({});
 
 export default Home;

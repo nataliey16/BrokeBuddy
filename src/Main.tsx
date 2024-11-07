@@ -26,21 +26,7 @@ function Main(): React.JSX.Element {
             fontSize: 30,
           },
         }}>
-        <Stack.Screen
-          name="Transactions"
-          component={Home}
-          //   options={({navigation}) => ({
-          //     headerLeft: () => (
-          //       <Button
-          //         title="back"
-          //         onPress={() => {
-          //           console.log('clicked');
-          //           navigation.navigate('Details');
-          //         }}
-          //       />
-          //     ),
-          //   })}
-        />
+        <Stack.Screen name="Transactions" component={Home} />
         <Stack.Screen name="Details" component={Details} />
         <Stack.Screen name="Add Transaction" component={AddTransaction} />
         <Stack.Screen name="Update Transaction" component={UpdateTransaction} />

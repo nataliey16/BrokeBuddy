@@ -9,7 +9,13 @@ import {
   TransactionType,
 } from '../utils/utility';
 
-function AddTransaction(): React.JSX.Element {
+function AddTransaction({
+  route,
+  navigation,
+}: {
+  route: any;
+  navigation: any;
+}): React.JSX.Element {
   const [newTransEntry, setNewTransEntry] = useState(defaultTransactionEntry);
 
   const handleInputChange = (name: string, value: any) => {
@@ -17,7 +23,6 @@ function AddTransaction(): React.JSX.Element {
       ...prevEntry,
       [name]: value,
     }));
-    // console.log(value);
   };
 
   const handleTransactionTypeChange = (type: TransactionType) => {
@@ -31,6 +36,7 @@ function AddTransaction(): React.JSX.Element {
   const handleSubmit = () => {
     //generate an id associated with trans entry
     const transactionWithId = {...newTransEntry, id: getNewID()};
+
     console.log(transactionWithId);
 
     addEditTransaction(transactionWithId);
@@ -63,7 +69,7 @@ function AddTransaction(): React.JSX.Element {
       <CheckBox
         label="Essential"
         value={newTransEntry.type === TransactionType.Essential}
-        onChangeTransType={value =>
+        onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Essential)
         }
       />
