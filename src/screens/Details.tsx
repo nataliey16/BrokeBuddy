@@ -55,7 +55,7 @@ const style = StyleSheet.create({
   },
   txt: {
     fontSize: 20,
-    color: '#525252',
+    color: '#313131',
     margin: 10,
   },
 });

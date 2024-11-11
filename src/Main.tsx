@@ -27,7 +27,20 @@ function Main(): React.JSX.Element {
           },
         }}>
         <Stack.Screen name="Transactions" component={Home} />
-        <Stack.Screen name="Details" component={Details} />
+        <Stack.Screen
+          name="Details"
+          component={Details}
+          options={({navigation}) => ({
+            title: 'Details',
+            headerRight: () => (
+              <Button
+                title="Edit"
+                color="#000"
+                onPress={() => navigation.navigate('Update Transaction')}
+              />
+            ),
+          })}
+        />
         <Stack.Screen name="Add Transaction" component={AddTransaction} />
         <Stack.Screen name="Update Transaction" component={UpdateTransaction} />
       </Stack.Navigator>
