@@ -16,6 +16,9 @@ function UpdateTransactions({
   route: any;
   navigation: any;
 }): React.JSX.Element {
+  const editTransItemParams = route.params?.transItemData;
+  //need to update state of form instead
+  console.log(editTransItemParams);
   const [newTransEntry, setNewTransEntry] = useState(defaultTransactionEntry);
 
   const handleInputChange = (name: string, value: any) => {
@@ -50,39 +53,39 @@ function UpdateTransactions({
       <TextInput
         style={CommonStyles.txtInput}
         placeholder="Title"
-        value={newTransEntry.title}
+        value={editTransItemParams.title}
         onChangeText={value => handleInputChange('title', value)}
       />
       <TextInput
         style={[CommonStyles.txtInput, {height: 100}]}
         placeholder="Add Description"
-        value={newTransEntry.desc}
+        value={editTransItemParams.desc}
         onChangeText={value => handleInputChange('desc', value)}
       />
       <TextInput
         style={CommonStyles.txtInput}
         placeholder="Amount in CAD"
-        value={newTransEntry.amount.toString()}
+        value={editTransItemParams.amount.toString()}
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
         keyboardType="numeric"
       />
       <CheckBox
         label="Essential"
-        value={newTransEntry.type === TransactionType.Essential}
+        value={editTransItemParams.type === TransactionType.Essential}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Essential)
         }
       />
       <CheckBox
         label="Leisure"
-        value={newTransEntry.type === TransactionType.Leisure}
+        value={editTransItemParams.type === TransactionType.Leisure}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Leisure)
         }
       />
       <CheckBox
         label="Others"
-        value={newTransEntry.type === TransactionType.Others}
+        value={editTransItemParams.type === TransactionType.Others}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Others)
         }

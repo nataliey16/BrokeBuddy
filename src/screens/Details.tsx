@@ -9,7 +9,7 @@ function Details({
   route: any;
   navigation: any;
 }): React.JSX.Element {
-  const transParams = route.params?.transItemData;
+  const transItemParams = route.params?.transItemData;
   const transTypeColor = route.params?.transTypeColor;
   console.log(transTypeColor);
   return (
@@ -20,11 +20,11 @@ function Details({
             style.titleView,
             {backgroundColor: transTypeColor, borderColor: transTypeColor},
           ]}>
-          <Text style={[CommonStyles.txt]}>{transParams.title}</Text>
+          <Text style={[CommonStyles.txt]}>{transItemParams.title}</Text>
         </View>
         <View style={style.itemDescView}>
-          <Text style={style.txt}>{transParams.desc}</Text>
-          <Text style={style.txt}>${transParams.amount}</Text>
+          <Text style={style.txt}>{transItemParams.desc}</Text>
+          <Text style={style.txt}>${transItemParams.amount}</Text>
         </View>
       </View>
     </View>
