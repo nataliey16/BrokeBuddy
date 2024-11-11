@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {TransactionType_bgColor} from './utility';
 
 export const CommonStyles = StyleSheet.create({
   screens: {
@@ -32,7 +33,6 @@ export const CommonStyles = StyleSheet.create({
 
   button: {
     borderRadius: 10,
-    //   maxWidth: 150,
     minWidth: '40%',
     height: 60,
     alignSelf: 'center',

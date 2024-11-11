@@ -45,7 +45,10 @@ function Home({
     return (
       <Pressable
         onPress={() => {
-          navigation.navigate('Details', {transactionItemDat: transactions});
+          navigation.navigate('Details', {
+            transItemData: item,
+            transTypeColor: backgroundColor,
+          });
         }}>
         <View style={[CommonStyles.transactionsView, {backgroundColor}]}>
           <Text style={CommonStyles.transactionsTxt}>{item.title}</Text>
