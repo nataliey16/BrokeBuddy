@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import {FloatingAction} from 'react-native-floating-action';
 import {
@@ -43,10 +43,15 @@ function Home({
   const renderItem = ({item}: {item: any}) => {
     const backgroundColor = TransactionType_bgColor[item.type] || '#FFF';
     return (
-      <View style={[CommonStyles.transactionsView, {backgroundColor}]}>
-        <Text style={CommonStyles.transactionsTxt}>{item.title}</Text>
-        <Text style={CommonStyles.transactionsTxt}>${item.amount}</Text>
-      </View>
+      <Pressable
+        onPress={() => {
+          navigation.navigate('Details', {transactionItemDat: transactions});
+        }}>
+        <View style={[CommonStyles.transactionsView, {backgroundColor}]}>
+          <Text style={CommonStyles.transactionsTxt}>{item.title}</Text>
+          <Text style={CommonStyles.transactionsTxt}>${item.amount}</Text>
+        </View>
+      </Pressable>
     );
   };
 
