@@ -2,7 +2,13 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import {FloatingAction} from 'react-native-floating-action';
-import {getInitialData, addEditTransaction} from '../utils/utility';
+import {
+  getInitialData,
+  addEditTransaction,
+  getTransactionByID,
+  TransactionType,
+  TransactionType_bgColor,
+} from '../utils/utility';
 
 function Home({
   route,
@@ -34,6 +40,16 @@ function Home({
     },
   ];
 
+  const renderItem = ({item}: {item: any}) => {
+    const backgroundColor = TransactionType_bgColor[item.type] || '#FFF';
+    return (
+      <View style={[CommonStyles.transactionsView, {backgroundColor}]}>
+        <Text style={CommonStyles.transactionsTxt}>{item.title}</Text>
+        <Text style={CommonStyles.transactionsTxt}>${item.amount}</Text>
+      </View>
+    );
+  };
+
   return (
     <View style={CommonStyles.screens}>
       {transactions.length === 0 ? (
@@ -44,13 +60,8 @@ function Home({
         <>
           <FlatList
             data={transactions}
-            keyExtractor={item => item.id} // Ensure the id is a string
-            renderItem={({item}) => (
-              <View>
-                <Text>Title: {item.title}</Text>
-                <Text>Amount: ${item.amount}</Text>
-              </View>
-            )}
+            keyExtractor={item => item.id.toString()} // Ensure id is unique
+            renderItem={renderItem}
           />
         </>
       )}

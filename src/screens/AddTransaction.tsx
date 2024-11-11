@@ -37,8 +37,6 @@ function AddTransaction({
     //generate an id associated with trans entry
     const transactionWithId = {...newTransEntry, id: getNewID()};
 
-    console.log(transactionWithId);
-
     addEditTransaction(transactionWithId);
 
     navigation.navigate('Transactions', {

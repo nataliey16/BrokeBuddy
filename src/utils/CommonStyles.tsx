@@ -49,4 +49,17 @@ export const CommonStyles = StyleSheet.create({
     color: '#fff',
     textAlign: 'center',
   },
+
+  transactionsView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 3,
+    width: '100%',
+  },
+  transactionsTxt: {
+    fontSize: 25,
+    justifyContent: 'space-between',
+    margin: 10,
+    paddingHorizontal: 10,
+  },
 });

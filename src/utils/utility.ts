@@ -87,7 +87,6 @@ const TEST_DATA: Array<TransactionEntry> = [
 // const TRANSACTION_DATA : Array<TransactionEntry> = TEST_DATA;
 
 const TRANSACTION_DATA: Array<TransactionEntry> = [];
-console.log(TRANSACTION_DATA);
 /**
  *
  * @returns Initial data set while app launches for the first time.
