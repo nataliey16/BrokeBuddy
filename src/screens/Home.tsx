@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import {FloatingAction} from 'react-native-floating-action';
+import {getInitialData, addEditTransaction} from '../utils/utility';
 
 function Home({
   route,
@@ -10,6 +11,19 @@ function Home({
   route: any;
   navigation: any;
 }): React.JSX.Element {
+  const [transactions, setTransactions] = useState<any[]>([]);
+
+  useEffect(() => {
+    //if submitted data from AddTransaction screen exists, add to transactions state
+    if (route.params?.submittedData) {
+      console.log('Received Submitted Data:', route.params.submittedData);
+
+      setTransactions(prevTransactions => [
+        ...prevTransactions,
+        route.params.submittedData,
+      ]);
+    }
+  }, [route.params?.submittedData]);
   const actions = [
     {
       text: 'Add Transaction',
@@ -22,10 +36,24 @@ function Home({
 
   return (
     <View style={CommonStyles.screens}>
-      <Text style={CommonStyles.placeholderTxt}>
-        Add Transaction to See Entry Here.
-      </Text>
-      {/* <FlatList /> */}
+      {transactions.length === 0 ? (
+        <Text style={CommonStyles.placeholderTxt}>
+          Add Transaction to see transactions.
+        </Text>
+      ) : (
+        <>
+          <FlatList
+            data={transactions}
+            keyExtractor={item => item.id} // Ensure the id is a string
+            renderItem={({item}) => (
+              <View>
+                <Text>Title: {item.title}</Text>
+                <Text>Amount: ${item.amount}</Text>
+              </View>
+            )}
+          />
+        </>
+      )}
       <FloatingAction
         actions={actions}
         onPressItem={() => navigation.navigate('Add Transaction')}

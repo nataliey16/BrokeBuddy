@@ -41,6 +41,9 @@ function AddTransaction({
 
     addEditTransaction(transactionWithId);
 
+    navigation.navigate('Transactions', {
+      submittedData: transactionWithId,
+    });
     //reset the form
     setNewTransEntry(defaultTransactionEntry);
   };
