@@ -2,13 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, StyleSheet, Pressable} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import {FloatingAction} from 'react-native-floating-action';
-import {
-  getInitialData,
-  addEditTransaction,
-  getTransactionByID,
-  TransactionType,
-  TransactionType_bgColor,
-} from '../utils/utility';
+import {TransactionType_bgColor} from '../utils/utility';
 
 function Home({
   route,
@@ -29,7 +23,25 @@ function Home({
         route.params.submittedData,
       ]);
     }
-  }, [route.params?.submittedData]);
+
+    //if submitted data is from UpdateTransaction. If it exists, update transaction
+
+    if (route.params?.editedSubmittedData) {
+      console.log(
+        'Received Edited Submitted Data:',
+        route.params.editedSubmittedData,
+      );
+
+      setTransactions(prevTransactions => [
+        prevTransactions.map(transaction =>
+          transaction.id === route.params.editedSubmittedData.id
+            ? route.params.editedSubmittedData
+            : transaction,
+        ),
+      ]);
+    }
+  }, [route.params?.submittedData, route.params?.editedSubmittedData]);
+
   const actions = [
     {
       text: 'Add Transaction',
@@ -49,10 +61,11 @@ function Home({
             transItemData: item,
             transTypeColor: backgroundColor,
           });
+          console.log('Item ID:', item.id);
         }}>
         <View style={[CommonStyles.transactionsView, {backgroundColor}]}>
-          <Text style={CommonStyles.transactionsTxt}>{item.title}</Text>
-          <Text style={CommonStyles.transactionsTxt}>${item.amount}</Text>
+          <Text style={CommonStyles.transactionsTxt}>{item?.title}</Text>
+          <Text style={CommonStyles.transactionsTxt}>${item?.amount}</Text>
         </View>
       </Pressable>
     );

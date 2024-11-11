@@ -16,20 +16,21 @@ function UpdateTransactions({
   route: any;
   navigation: any;
 }): React.JSX.Element {
-  const editTransItemParams = route.params?.transItemData;
-  //need to update state of form instead
-  console.log(editTransItemParams);
-  const [newTransEntry, setNewTransEntry] = useState(defaultTransactionEntry);
+  const editTransItem = route.params?.editItemParams;
+  console.log(editTransItem);
+
+  const [updateTransaction, setUpdateTransaction] = useState(editTransItem);
 
   const handleInputChange = (name: string, value: any) => {
-    setNewTransEntry(prevEntry => ({
+    setUpdateTransaction((prevEntry: typeof defaultTransactionEntry) => ({
       ...prevEntry,
       [name]: value,
     }));
+    console.log(value);
   };
 
   const handleTransactionTypeChange = (type: TransactionType) => {
-    setNewTransEntry(prevEntry => ({
+    setUpdateTransaction((prevEntry: typeof defaultTransactionEntry) => ({
       ...prevEntry,
       type,
     }));
@@ -38,54 +39,58 @@ function UpdateTransactions({
 
   const handleSubmit = () => {
     //generate an id associated with trans entry
-    const transactionWithId = {...newTransEntry, id: getNewID()};
+    // const transactionWithId = {...updateTransaction, id: getNewID()};
+    const updateTransactionWithId = {
+      ...updateTransaction,
+      id: updateTransaction.id.toString(),
+    };
 
-    addEditTransaction(transactionWithId);
-
+    addEditTransaction(updateTransactionWithId);
+    console.log(updateTransactionWithId);
     navigation.navigate('Transactions', {
-      submittedData: transactionWithId,
+      editedSubmittedData: updateTransactionWithId,
     });
     //reset the form
-    setNewTransEntry(defaultTransactionEntry);
+    setUpdateTransaction(defaultTransactionEntry);
   };
   return (
     <View>
       <TextInput
         style={CommonStyles.txtInput}
-        placeholder="Title"
-        value={editTransItemParams.title}
+        placeholder={updateTransaction.title}
+        value={updateTransaction.title}
         onChangeText={value => handleInputChange('title', value)}
       />
       <TextInput
         style={[CommonStyles.txtInput, {height: 100}]}
-        placeholder="Add Description"
-        value={editTransItemParams.desc}
+        placeholder={updateTransaction.desc}
+        value={updateTransaction.desc}
         onChangeText={value => handleInputChange('desc', value)}
       />
       <TextInput
         style={CommonStyles.txtInput}
-        placeholder="Amount in CAD"
-        value={editTransItemParams.amount.toString()}
+        placeholder={updateTransaction.amount.toString()}
+        value={updateTransaction.amount.toString()}
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
         keyboardType="numeric"
       />
       <CheckBox
         label="Essential"
-        value={editTransItemParams.type === TransactionType.Essential}
+        value={updateTransaction.type === TransactionType.Essential}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Essential)
         }
       />
       <CheckBox
         label="Leisure"
-        value={editTransItemParams.type === TransactionType.Leisure}
+        value={updateTransaction.type === TransactionType.Leisure}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Leisure)
         }
       />
       <CheckBox
         label="Others"
-        value={editTransItemParams.type === TransactionType.Others}
+        value={updateTransaction.type === TransactionType.Others}
         onChangeTransType={() =>
           handleTransactionTypeChange(TransactionType.Others)
         }

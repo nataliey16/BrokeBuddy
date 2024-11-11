@@ -1,5 +1,5 @@
-import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, Text, StyleSheet, Button} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 
 function Details({
@@ -11,7 +11,24 @@ function Details({
 }): React.JSX.Element {
   const transItemParams = route.params?.transItemData;
   const transTypeColor = route.params?.transTypeColor;
-  console.log(transTypeColor);
+
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+        <Button
+          title="Edit"
+          color="#000"
+          onPress={() => {
+            navigation.navigate('Update Transaction', {
+              editItemParams: transItemParams,
+            });
+            // console.log(transItemParams);
+          }}
+        />
+      ),
+    });
+  }, [navigation, transItemParams]);
+
   return (
     <View style={CommonStyles.screens}>
       <View style={[style.boxView, {borderColor: transTypeColor}]}>
@@ -20,11 +37,11 @@ function Details({
             style.titleView,
             {backgroundColor: transTypeColor, borderColor: transTypeColor},
           ]}>
-          <Text style={[CommonStyles.txt]}>{transItemParams.title}</Text>
+          <Text style={[CommonStyles.txt]}>{transItemParams?.title}</Text>
         </View>
         <View style={style.itemDescView}>
-          <Text style={style.txt}>{transItemParams.desc}</Text>
-          <Text style={style.txt}>${transItemParams.amount}</Text>
+          <Text style={style.txt}>{transItemParams?.desc}</Text>
+          <Text style={style.txt}>${transItemParams?.amount}</Text>
         </View>
       </View>
     </View>
