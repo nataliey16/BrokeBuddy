@@ -22,7 +22,6 @@ function Details({
             navigation.navigate('Update Transaction', {
               editItemParams: transItemParams,
             });
-            // console.log(transItemParams);
           }}
         />
       ),

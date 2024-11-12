@@ -26,7 +26,6 @@ function UpdateTransactions({
       ...prevEntry,
       [name]: value,
     }));
-    console.log(value);
   };
 
   const handleTransactionTypeChange = (type: TransactionType) => {
@@ -38,13 +37,9 @@ function UpdateTransactions({
   };
 
   const handleSubmit = () => {
-    //generate an id associated with trans entry
-    // const transactionWithId = {...updateTransaction, id: getNewID()};
     const updateTransactionWithId = {
       ...updateTransaction,
-      // id: updateTransaction.id.toString(),
     };
-    console.log(updateTransactionWithId);
 
     addEditTransaction(updateTransactionWithId);
     console.log(updateTransactionWithId);

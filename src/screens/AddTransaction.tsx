@@ -30,7 +30,6 @@ function AddTransaction({
       ...prevEntry,
       type,
     }));
-    console.log(type);
   };
 
   const handleSubmit = () => {
