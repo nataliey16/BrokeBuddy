@@ -42,8 +42,9 @@ function UpdateTransactions({
     // const transactionWithId = {...updateTransaction, id: getNewID()};
     const updateTransactionWithId = {
       ...updateTransaction,
-      id: updateTransaction.id.toString(),
+      // id: updateTransaction.id.toString(),
     };
+    console.log(updateTransactionWithId);
 
     addEditTransaction(updateTransactionWithId);
     console.log(updateTransactionWithId);

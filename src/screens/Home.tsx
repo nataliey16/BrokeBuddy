@@ -24,7 +24,7 @@ function Home({
       ]);
     }
 
-    //if submitted data is from UpdateTransaction. If it exists, update transaction
+    //if submitted data is from UpdateTransaction and it exists, update transaction
 
     if (route.params?.editedSubmittedData) {
       console.log(
@@ -32,13 +32,14 @@ function Home({
         route.params.editedSubmittedData,
       );
 
-      setTransactions(prevTransactions => [
-        prevTransactions.map(transaction =>
-          transaction.id === route.params.editedSubmittedData.id
-            ? route.params.editedSubmittedData
-            : transaction,
+      setTransactions(prevTransaction =>
+        prevTransaction.map(
+          transaction =>
+            transaction.id === route.params.editedSubmittedData.id
+              ? route.params.editedSubmittedData // updates the trans with matching id
+              : transaction, // else keeps the other trans unchanged
         ),
-      ]);
+      );
     }
   }, [route.params?.submittedData, route.params?.editedSubmittedData]);
 
@@ -81,7 +82,7 @@ function Home({
         <>
           <FlatList
             data={transactions}
-            keyExtractor={item => item.id.toString()} // Ensure id is unique
+            keyExtractor={item => item.id} // Ensure id is unique
             renderItem={renderItem}
           />
         </>
