@@ -62,4 +62,9 @@ export const CommonStyles = StyleSheet.create({
     margin: 10,
     paddingHorizontal: 10,
   },
+
+  errorMsg: {
+    color: 'red',
+    fontSize: 10,
+  },
 });

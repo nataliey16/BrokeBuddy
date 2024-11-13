@@ -16,7 +16,36 @@ function AddTransaction({
   route: any;
   navigation: any;
 }): React.JSX.Element {
-  const [newTransEntry, setNewTransEntry] = useState(defaultTransactionEntry);
+  const [newTransEntry, setNewTransEntry] = useState({
+    ...defaultTransactionEntry,
+    errors: {
+      title: '',
+      amount: '',
+      desc: '',
+      type: '',
+    },
+  });
+  // const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let errors: {
+      title?: string;
+      amount?: string;
+      desc?: string;
+    } = {};
+
+    if (!newTransEntry.title.trim()) {
+      errors.title = 'Title is required';
+    }
+    if (!newTransEntry.desc.trim()) {
+      errors.desc = 'Description is required';
+    }
+    if (isNaN(newTransEntry.amount) || newTransEntry.amount <= 0) {
+      errors.amount = 'Amount is required';
+    }
+
+    return Object.keys(errors).length === 0;
+  };
 
   const handleInputChange = (name: string, value: any) => {
     setNewTransEntry(prevEntry => ({
@@ -41,8 +70,19 @@ function AddTransaction({
     navigation.navigate('Transactions', {
       submittedData: transactionWithId,
     });
+
+    validateForm();
+
     //reset the form
-    setNewTransEntry(defaultTransactionEntry);
+    setNewTransEntry({
+      ...defaultTransactionEntry,
+      errors: {
+        title: '',
+        amount: '',
+        desc: '',
+        type: '',
+      },
+    });
   };
 
   return (
@@ -53,6 +93,9 @@ function AddTransaction({
         value={newTransEntry.title}
         onChangeText={value => handleInputChange('title', value)}
       />
+      {newTransEntry.errors.title ? (
+        <Text style={CommonStyles.errorMsg}>{newTransEntry.errors.title}</Text>
+      ) : null}
       <TextInput
         style={[CommonStyles.txtInput, {height: 100}]}
         placeholder="Add Description"

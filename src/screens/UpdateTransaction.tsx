@@ -33,7 +33,6 @@ function UpdateTransactions({
       ...prevEntry,
       type,
     }));
-    console.log(type);
   };
 
   const handleSubmit = () => {
