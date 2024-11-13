@@ -65,6 +65,7 @@ export const CommonStyles = StyleSheet.create({
 
   errorMsg: {
     color: 'red',
-    fontSize: 10,
+    fontSize: 15,
+    marginHorizontal: 20,
   },
 });

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, TextInput, Pressable} from 'react-native';
 import {CommonStyles} from '../utils/CommonStyles';
 import CheckBox from '../components/CheckBox';
@@ -16,35 +16,29 @@ function AddTransaction({
   route: any;
   navigation: any;
 }): React.JSX.Element {
-  const [newTransEntry, setNewTransEntry] = useState({
-    ...defaultTransactionEntry,
-    errors: {
-      title: '',
-      amount: '',
-      desc: '',
-      type: '',
-    },
-  });
-  // const [errors, setErrors] = useState({});
+  const [newTransEntry, setNewTransEntry] = useState(defaultTransactionEntry);
+  const [errors, setErrors] = useState<{
+    title?: string;
+    desc?: string;
+    amount?: string;
+  }>({});
 
   const validateForm = () => {
-    let errors: {
-      title?: string;
-      amount?: string;
-      desc?: string;
-    } = {};
+    let newErrors: {title?: string; desc?: string; amount?: string} = {};
 
-    if (!newTransEntry.title.trim()) {
-      errors.title = 'Title is required';
+    if (!newTransEntry.title) {
+      newErrors.title = 'Title is required.';
     }
-    if (!newTransEntry.desc.trim()) {
-      errors.desc = 'Description is required';
+    if (!newTransEntry.desc) {
+      newErrors.desc = 'Description is required.';
     }
-    if (isNaN(newTransEntry.amount) || newTransEntry.amount <= 0) {
-      errors.amount = 'Amount is required';
+    if (!newTransEntry.amount) {
+      newErrors.amount = 'Amount is required.';
     }
 
-    return Object.keys(errors).length === 0;
+    setErrors(newErrors);
+    //if error object does not have a key for one of the values, no error msgs and form is valid
+    return Object.keys(newErrors).length === 0;
   };
 
   const handleInputChange = (name: string, value: any) => {
@@ -62,27 +56,25 @@ function AddTransaction({
   };
 
   const handleSubmit = () => {
-    //generate an id associated with trans entry
-    const transactionWithId = {...newTransEntry, id: getNewID()};
+    const formIsValid = validateForm();
 
-    addEditTransaction(transactionWithId);
+    if (formIsValid) {
+      //generate an id associated with trans entry
+      const transactionWithId = {...newTransEntry, id: getNewID()};
 
-    navigation.navigate('Transactions', {
-      submittedData: transactionWithId,
-    });
+      addEditTransaction(transactionWithId);
 
-    validateForm();
+      navigation.navigate('Transactions', {
+        submittedData: transactionWithId,
+      });
 
-    //reset the form
-    setNewTransEntry({
-      ...defaultTransactionEntry,
-      errors: {
-        title: '',
-        amount: '',
-        desc: '',
-        type: '',
-      },
-    });
+      //reset the form
+      setNewTransEntry(defaultTransactionEntry);
+
+      console.log('Form submitted successfully!');
+    } else {
+      console.log('Form has errors. Please correct them.');
+    }
   };
 
   return (
@@ -93,8 +85,8 @@ function AddTransaction({
         value={newTransEntry.title}
         onChangeText={value => handleInputChange('title', value)}
       />
-      {newTransEntry.errors.title ? (
-        <Text style={CommonStyles.errorMsg}>{newTransEntry.errors.title}</Text>
+      {errors.title ? (
+        <Text style={CommonStyles.errorMsg}>{errors.title}</Text>
       ) : null}
       <TextInput
         style={[CommonStyles.txtInput, {height: 100}]}
@@ -102,6 +94,9 @@ function AddTransaction({
         value={newTransEntry.desc}
         onChangeText={value => handleInputChange('desc', value)}
       />
+      {errors.desc ? (
+        <Text style={CommonStyles.errorMsg}>{errors.desc}</Text>
+      ) : null}
       <TextInput
         style={CommonStyles.txtInput}
         placeholder="Amount in CAD"
@@ -109,6 +104,9 @@ function AddTransaction({
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
         keyboardType="numeric"
       />
+      {errors.amount ? (
+        <Text style={CommonStyles.errorMsg}>{errors.amount}</Text>
+      ) : null}
       <CheckBox
         label="Essential"
         value={newTransEntry.type === TransactionType.Essential}
