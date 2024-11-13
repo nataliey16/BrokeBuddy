@@ -17,7 +17,6 @@ function UpdateTransactions({
   navigation: any;
 }): React.JSX.Element {
   const editTransItem = route.params?.editItemParams;
-  console.log(editTransItem);
 
   const [updateTransaction, setUpdateTransaction] = useState(editTransItem);
 

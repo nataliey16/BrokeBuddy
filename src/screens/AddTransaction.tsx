@@ -105,7 +105,9 @@ function AddTransaction({
         keyboardType="numeric"
       />
       {errors.amount ? (
-        <Text style={CommonStyles.errorMsg}>{errors.amount}</Text>
+        <Text style={[CommonStyles.errorMsg, {marginBottom: 10}]}>
+          {errors.amount}
+        </Text>
       ) : null}
       <CheckBox
         label="Essential"
