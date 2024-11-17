@@ -8,6 +8,7 @@ import {
   getNewID,
   TransactionType,
 } from '../utils/utility';
+import AddTransaction from './AddTransaction';
 
 function UpdateTransactions({
   route,
@@ -19,6 +20,29 @@ function UpdateTransactions({
   const editTransItem = route.params?.editItemParams;
 
   const [updateTransaction, setUpdateTransaction] = useState(editTransItem);
+  const [errors, setErrors] = useState<{
+    title?: string;
+    desc?: string;
+    amount?: string;
+  }>({});
+
+  const validateForm = () => {
+    let newErrors: {title?: string; desc?: string; amount?: string} = {};
+
+    if (!updateTransaction.title) {
+      newErrors.title = 'Title is required.';
+    }
+    if (!updateTransaction.desc) {
+      newErrors.desc = 'Description is required.';
+    }
+    if (!updateTransaction.amount) {
+      newErrors.amount = 'Amount is required.';
+    }
+
+    setErrors(newErrors);
+    //if error object does not have a key for one of the values, no error msgs and form is valid
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleInputChange = (name: string, value: any) => {
     setUpdateTransaction((prevEntry: typeof defaultTransactionEntry) => ({
@@ -35,17 +59,24 @@ function UpdateTransactions({
   };
 
   const handleSubmit = () => {
-    const updateTransactionWithId = {
-      ...updateTransaction,
-    };
+    const formIsValid = validateForm();
 
-    addEditTransaction(updateTransactionWithId);
-    console.log(updateTransactionWithId);
-    navigation.navigate('Transactions', {
-      editedSubmittedData: updateTransactionWithId,
-    });
-    //reset the form
-    setUpdateTransaction(defaultTransactionEntry);
+    if (formIsValid) {
+      const updateTransactionWithId = {
+        ...updateTransaction,
+      };
+
+      addEditTransaction(updateTransactionWithId);
+      console.log(updateTransactionWithId);
+      navigation.navigate('Transactions', {
+        editedSubmittedData: updateTransactionWithId,
+      });
+      //reset the form
+      setUpdateTransaction(defaultTransactionEntry);
+      console.log('Form submitted successfully with edits!');
+    } else {
+      console.log('Form has errors. Please correct them.');
+    }
   };
   return (
     <View>
@@ -55,12 +86,18 @@ function UpdateTransactions({
         value={updateTransaction.title}
         onChangeText={value => handleInputChange('title', value)}
       />
+      {errors.title ? (
+        <Text style={CommonStyles.errorMsg}>{errors.title}</Text>
+      ) : null}
       <TextInput
         style={[CommonStyles.txtInput, {height: 100}]}
         placeholder={updateTransaction.desc}
         value={updateTransaction.desc}
         onChangeText={value => handleInputChange('desc', value)}
       />
+      {errors.desc ? (
+        <Text style={CommonStyles.errorMsg}>{errors.desc}</Text>
+      ) : null}
       <TextInput
         style={CommonStyles.txtInput}
         placeholder={updateTransaction.amount.toString()}
@@ -68,6 +105,11 @@ function UpdateTransactions({
         onChangeText={value => handleInputChange('amount', parseFloat(value))}
         keyboardType="numeric"
       />
+      {errors.amount ? (
+        <Text style={[CommonStyles.errorMsg, {marginBottom: 10}]}>
+          {errors.amount}
+        </Text>
+      ) : null}
       <CheckBox
         label="Essential"
         value={updateTransaction.type === TransactionType.Essential}
